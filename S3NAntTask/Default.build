@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="Amazon S3 NAnt Task" default="build">
+  <loadtasks assembly="..\build\S3NAntTask.dll" />
+  <property name="current.directory"	value="${directory::get-current-directory()}" />
+
+  <target name="build" description="Test the Amazon S3 NAnt task">
+    <amazon-s3 accesskey="AWS Access Key" 
+               secretkey="AWS Secret Key" 
+               bucket="my-bucket" 
+               file="${current.directory}\file.zip" />
+  </target>
+</project>

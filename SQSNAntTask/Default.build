@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="Amazon SQS NAnt Task" default="build">
+  <loadtasks assembly="..\build\SQSNAntTask.dll" />
+
+  <target name="build" description="Test the Amazon SQS NAnt task">
+    <amazon-sqs accesskey="AWS Access Key" 
+               secretkey="AWS Secret Key" 
+               queue="my-queue"
+               url="https://us-west-1.queue.amazonaws.com/queueurl"
+               message="Message" />
+  </target>
+</project>

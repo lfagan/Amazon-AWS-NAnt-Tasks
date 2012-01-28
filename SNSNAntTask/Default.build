@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<project name="Amazon SNS NAnt Task" default="build">
+  <loadtasks assembly="..\build\SNSNAntTask.dll" />
+
+  <target name="build" description="Test the Amazon SNS NAnt task">
+    <amazon-sns accesskey="AWS Access Key"
+                secretkey="AWS Secrey Key"
+                topic="my-topic" 
+                arn="topic:arn" 
+                subject="Subject"
+                message="Message" />
+  </target>
+</project>
