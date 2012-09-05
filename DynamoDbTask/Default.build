@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<project name="Amazon DynamoDB NAnt Task" default="build">
+  <loadtasks assembly="..\build\DynamoDbNAntTask.dll" />
+  <property name="current.directory"	value="${directory::get-current-directory()}" />
+
+  <target name="build" description="Test the Amazon DynamoDB NAnt task">
+    <amazon-dynamodb accesskey="AWS Access Key" 
+               secretkey="AWS Secret Key" 
+               table="DynamoDbTable" 
+               application="TestApp" 
+               version="1.0.0.1" />
+  </target>
+</project>

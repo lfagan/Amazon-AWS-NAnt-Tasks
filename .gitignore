@@ -1,0 +1,9 @@
+/DynamoDbTask/obj
+/DynamoDbTask/bin
+/S3NAntTask/obj
+/S3NAntTask/bin
+/_ReSharper.NAntTasks
+/SNSNAntTask/obj
+/SNSNAntTask/bin
+/SQSNAntTask/obj
+/SQSNAntTask/bin
