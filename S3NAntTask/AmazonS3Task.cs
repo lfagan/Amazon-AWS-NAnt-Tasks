@@ -28,6 +28,14 @@ namespace S3NAntTask {
         [StringValidator(AllowEmpty = false)]
         public string FilePath { get; set; }
 
+        [TaskAttribute("key", Required = false)]
+        [StringValidator(AllowEmpty = false)]
+        public string Key { get; set; }
+
+        [TaskAttribute("overwrite", Required = false)]
+        [StringValidator(AllowEmpty = true)]
+        public bool Overwrite { get; set; }
+
         [TaskAttribute("region", Required = false)]
         [StringValidator(AllowEmpty = false)]
         public string Region {
@@ -50,9 +58,10 @@ namespace S3NAntTask {
             // Ensure the configured bucket exists
             if (!DoesBucketExist())
                 CreateBucket();
-            // Ensure the file doesn't already exist in the specified bucket
-            if (DoesFileExist())
+            // Ensure the overwrite is false and the file doesn't already exist in the specified bucket
+            if (!Overwrite && DoesFileExist())
                 return;
+
             // Send the file to S3
             using (Client) {
                 try {
@@ -137,6 +146,18 @@ namespace S3NAntTask {
             return false;
         }
 
+        /// <summary>Get the name of the file we're sending to S3</summary>
+        private string FileName
+        {
+            get 
+            {
+                if (string.IsNullOrEmpty(Key))
+                    return Path.GetFileName(FilePath);
+                else
+                    return Key;
+            }
+        }
+
         /// <summary>Format and display an exception</summary>
         /// <param name="ex">Exception to display</param>
         private void ShowError(AmazonS3Exception ex) {
@@ -147,12 +168,7 @@ namespace S3NAntTask {
                 Project.Log(Level.Error, "An Error, number {0}, occurred with the message '{1}'",
                     ex.ErrorCode, ex.Message);
             }
-        }
-
-        /// <summary>Get the name of the file we're sending to S3</summary>
-        private string FileName {
-            get { return Path.GetFileName(FilePath); }
-        }
+        }        
 
         /// <summary>Get an Amazon S3 client. Be sure to dispose of the client when done</summary>
         private AmazonS3 Client {
