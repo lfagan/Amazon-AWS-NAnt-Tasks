@@ -1,12 +1,88 @@
 <?xml version="1.0"?>
-<project name="Amazon S3 NAnt Task" default="build">
-  <loadtasks assembly="..\build\S3NAntTask.dll" />
-  <property name="current.directory"	value="${directory::get-current-directory()}" />
+<project name="Amazon S3 NAnt Task" default="test-all">
+    <loadtasks assembly="..\build\S3NAntTask.dll" />
 
-  <target name="build" description="Test the Amazon S3 NAnt task">
-    <amazon-s3 accesskey="AWS Access Key" 
-               secretkey="AWS Secret Key" 
-               bucket="my-bucket" 
-               file="${current.directory}\file.zip" />
-  </target>
+    <property name="AWS_ACCESS_Key" value="" />
+    <property name="AWS_SECRET_Key" value="" />
+    
+    <property name="current.directory"	value="${directory::get-current-directory()}" />
+    <property name="bucket"             value="S3NAntTask-test-bucket" />
+    <property name="file"               value="file.zip" />
+    <property name="file1"              value="file1.zip" />
+    <property name="Outputfile"         value="file2.zip" />
+
+
+    <target name="put" description="Test the Amazon S3 NAnt upload task">
+
+        <amazon-s3-putFile
+            accesskey   = "${AWS_ACCESS_Key}" 
+            secretkey   = "${AWS_SECRET_Key}" 
+            bucket      = "${bucket}" 
+            file        = "${current.directory}\${file}" />
+    
+    </target>
+
+    <target name="put-DEPRECATED" description="Test the Amazon S3 NAnt upload task">
+
+        <amazon-s3
+            accesskey   = "${AWS_ACCESS_Key}"
+            secretkey   = "${AWS_SECRET_Key}"
+            bucket      = "${bucket}"
+            file        = "${current.directory}\${file1}" />
+
+    </target>
+
+    <target name="get" description="Test the Amazon S3 NAnt download task">
+
+        <amazon-s3-getFile
+            accesskey   = "${AWS_ACCESS_Key}"
+            secretkey   = "${AWS_SECRET_Key}"
+            bucket      = "${bucket}"
+            file        = "${file}" 
+            outputfile  = "${Outputfile}"/>
+
+    </target>
+
+    <target name="create-bucket" description="Test the Amazon S3 NAnt create bucket task">
+
+        <amazon-s3-CreateBucket
+            accesskey   = "${AWS_ACCESS_Key}"
+            secretkey   = "${AWS_SECRET_Key}"
+            bucket      = "${bucket}" />
+
+    </target>
+
+    <target name="delete-file" description="Test the Amazon S3 NAnt delete file task" >
+        <amazon-s3-deleteFile
+            accesskey   = "${AWS_ACCESS_Key}"
+            secretkey   = "${AWS_SECRET_Key}"
+            bucket      = "${bucket}" 
+            file        = "${file}"/>
+        
+        <amazon-s3-deleteFile
+            accesskey   = "${AWS_ACCESS_Key}"
+            secretkey   = "${AWS_SECRET_Key}"
+            bucket      = "${bucket}"
+            file        = "${file1}"/>
+        
+    </target>
+
+    <target name="delete-bucket" description="Test the Amazon S3 NAnt delete bucket task">
+
+        <amazon-s3-DeleteBucket
+            accesskey   = "${AWS_ACCESS_Key}"         
+            secretkey   = "${AWS_SECRET_Key}"
+            bucket      = "${bucket}" />
+
+    </target>
+
+    <target name="test-all" description="Test all components of the S3 NAnt tasks" >
+        <call target="create-bucket" />
+        <call target="put" />
+        <call target="put-DEPRECATED" />
+        <call target="get" />
+        <call target="delete-file" />
+        <call target="delete-bucket" />
+    </target>
+    
 </project>

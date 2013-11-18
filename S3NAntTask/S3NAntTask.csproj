@@ -43,7 +43,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmazonS3Task.cs" />
+    <Compile Include="S3CoreBucketTask.cs" />
+    <Compile Include="S3CoreFileTask.cs" />
+    <Compile Include="S3CoreTask.cs" />
+    <Compile Include="S3CreateBucketTask.cs" />
+    <Compile Include="S3DeleteBucketTask.cs" />
+    <Compile Include="S3DeleteFileTask.cs" />
+    <Compile Include="S3GetFileTask.cs" />
+    <Compile Include="S3PutFile-DEP-Task.cs" />
+    <Compile Include="S3PutFileTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
