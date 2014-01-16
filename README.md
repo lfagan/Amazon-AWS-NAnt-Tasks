@@ -5,14 +5,7 @@ This repository contains a Visual Studio 2010 solution with three projects:
 
 S3NAntTask
 ----------
-This project contains the following NAnt tasks for interacting with Amazon S3 storage:
-
-* amazon-s3 (DEPRECATED) - included for compatibility. The task will check to see if the bucket exists before sending the file. If the bucket doesn't exist, it will create the bucket before sending the file.
-* amazon-s3-CreateBucket - creates a new bucket
-* amazon-s3-DeleteBucket - deletes an *empty* bucket
-* amazon-s3-putFile - uploads a file into a bucket
-* amazon-s3-getFile - downloads a file from a bucket
-* amazon-s3-deleteFile - deletes a file from a bucket
+This project contains a NAnt task for sending files to an Amazon S3 bucket. The task will check to see if the bucket exists before sending the file. If the bucket doesn't exist, it will create the bucket before sending the file.
 
 Desired improvements:
 The ability to list multiple files (fileset)  to send to an s3 bucket rather than one at a time
