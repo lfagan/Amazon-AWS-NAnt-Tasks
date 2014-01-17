@@ -13,6 +13,7 @@ Function|NAnt Task|Comment
 Uploading a file|amazon-s3-putFile|
 Uploading a file|amazon-s3|(DEPRECATED - for backwards compatibility only)
 Downloading a file|amazon-s3-getFile|
+Copy a file between buckets|amazon-s3-copyFile|
 Deleting a file|amazon-s3-deleteFile|
 Creating a bucket|amazon-s3-CreateBucket|
 Deleting a bucket|amazon-s3-DeleteBucket|
