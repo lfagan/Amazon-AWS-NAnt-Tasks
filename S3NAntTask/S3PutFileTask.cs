@@ -16,7 +16,7 @@ namespace S3NAntTask
         protected override void ExecuteTask() 
         {
             // Ensure the configured bucket exists
-            if (!BucketExists())
+            if (!BucketExists(BucketName))
             {
                 Project.Log(Level.Error, "[ERROR] S3 Bucket '{0}' not found!", BucketName);
                 return;
@@ -30,7 +30,7 @@ namespace S3NAntTask
             }
 
             // Ensure the overwrite is false and the file doesn't already exist in the specified bucket
-            if (!Overwrite && FileExists())
+            if (!Overwrite && FileExists(FileName))
                 return;
 
             // Send the file to S3
@@ -55,10 +55,10 @@ namespace S3NAntTask
                     ShowError(ex);
                 }
             }
-            if (!FileExists())
-                Project.Log(Level.Error, "File: {0}, failed to upload!", FileName);
+            if (!FileExists(FileName))
+                Project.Log(Level.Error, "Upload FAILED!");
             else
-                Project.Log(Level.Info, "Successfully sent file to Amazon S3: {0}", FileName);
+                Project.Log(Level.Info, "Upload successful!");
         }
 
     }

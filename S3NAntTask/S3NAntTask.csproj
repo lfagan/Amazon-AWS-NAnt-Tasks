@@ -43,6 +43,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="S3CopyFileTask.cs" />
     <Compile Include="S3CoreBucketTask.cs" />
     <Compile Include="S3CoreFileTask.cs" />
     <Compile Include="S3CoreTask.cs" />

@@ -16,22 +16,30 @@ namespace S3NAntTask
         protected override void ExecuteTask()
         {
             Project.Log(Level.Info, "Deleting S3 bucket: {0}", BucketName);
-            using (Client)
+
+            /// Check to see if the bucket exists before we try to delete it. 
+            if (!BucketExists(BucketName))
             {
-                try
+                Project.Log(Level.Warning, "Bucket: {0} not found!", BucketName);
+                return;
+            }
+            else 
+            {
+                using (Client)
                 {
-                    DeleteBucketRequest request = new DeleteBucketRequest();
-                    request.BucketName = BucketName;
-                    //{
-                    //    BucketName = BucketName
-                    //};
-                    Client.DeleteBucket(request);
-                }
-                catch (AmazonS3Exception ex)
-                {
-                    ShowError(ex);
+                    try
+                    {
+                        DeleteBucketRequest request = new DeleteBucketRequest();
+                        request.BucketName = BucketName;
+                        Client.DeleteBucket(request);
+                    }
+                    catch (AmazonS3Exception ex)
+                    {
+                        ShowError(ex);
+                    }
                 }
             }
+            
         }
 
     }

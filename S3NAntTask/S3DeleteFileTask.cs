@@ -17,16 +17,16 @@ namespace S3NAntTask
         protected override void ExecuteTask()
         {
             // Ensure the configured bucket exists
-            if (!BucketExists())
+            if (!BucketExists(BucketName))
             {
-                Project.Log(Level.Error, "[ERROR] S3 Bucket '{0}' not found!", BucketName);
+                Project.Log(Level.Error, "[ERROR] S3 Bucket: {0}, not found!", BucketName);
                 return;
             }
 
             // Ensure the file exists
-            if (!FileExists())
+            if (!FileExists(FilePath))
             {
-                Project.Log(Level.Error, "File not found {0}", FileName);
+                Project.Log(Level.Error, "File not found {0}", FilePath);
                 return;
             }
             else
@@ -36,11 +36,11 @@ namespace S3NAntTask
                 {
                     try
                     {
-                        Project.Log(Level.Info, "Deleting file: {0}", FileName);
+                        Project.Log(Level.Info, "Deleting file: {0}", FilePath);
                         DeleteObjectRequest request = new DeleteObjectRequest
                         {
-                            Key = FileName,
-                            BucketName = BucketName,
+                            Key = FilePath,
+                            BucketName = BucketName
                         };
 
                         var response = Client.DeleteObject(request);
@@ -51,10 +51,10 @@ namespace S3NAntTask
                         ShowError(ex);
                     }
                 }
-                if (FileExists())
-                    Project.Log(Level.Error, "Delete file: {0} FAILED!", FileName);
+                if (FileExists(FilePath))
+                    Project.Log(Level.Error, "File delete FAILED!");
                 else
-                    Project.Log(Level.Info, "Delete file: {0} successful.", FileName);
+                    Project.Log(Level.Info, "File deleted.");
 
             }
         }
