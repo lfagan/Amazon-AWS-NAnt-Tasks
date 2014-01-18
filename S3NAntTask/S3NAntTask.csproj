@@ -48,6 +48,7 @@
     <Compile Include="S3CoreFileTask.cs" />
     <Compile Include="S3CoreTask.cs" />
     <Compile Include="S3CreateBucketTask.cs" />
+    <Compile Include="S3DeleteMultipleFilesTask.cs" />
     <Compile Include="S3DeleteBucketTask.cs" />
     <Compile Include="S3DeleteFileTask.cs" />
     <Compile Include="S3GetFileTask.cs" />

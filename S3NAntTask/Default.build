@@ -75,18 +75,17 @@
             bucket      = "${bucket}" 
             file        = "${file}"/>
         
-        <amazon-s3-deleteFile
-            accesskey   = "${AWS_ACCESS_Key}"
-            secretkey   = "${AWS_SECRET_Key}"
-            bucket      = "${bucket}"
-            file        = "${file1}"/>
+    </target>
 
-        <amazon-s3-deleteFile
+    <target name="delete-all-files" description="Test the delete all files in a bucket">
+        <!-- In the following task, searchstring is the string to look for in the object keys to delete.
+             If left blank this task will delete all the files in the specified bucket.-->
+        <amazon-s3-deleteAllFiles
             accesskey   = "${AWS_ACCESS_Key}"
             secretkey   = "${AWS_SECRET_Key}"
             bucket      = "${bucket}"
-            file        = '${TargetFile}'/>
-        
+            searchstring = "" />
+
     </target>
 
     <target name="delete-bucket" description="Test the Amazon S3 NAnt delete bucket task">
@@ -105,6 +104,7 @@
         <call target="copy" />
         <call target="get" />
         <call target="delete-files" />
+        <call target="delete-all-files" />
         <call target="delete-bucket" />
     </target>
     
