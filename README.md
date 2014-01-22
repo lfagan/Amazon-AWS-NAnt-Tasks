@@ -15,10 +15,11 @@ Uploading a file|amazon-s3|(DEPRECATED - for backwards compatibility only)
 Downloading a file|amazon-s3-getFile|
 Copy a file between buckets|amazon-s3-copyFile|
 Deleting a file|amazon-s3-deleteFile|
+Deleting all files in a bucket|amazon-s3-deleteAllFiles|
 Creating a bucket|amazon-s3-CreateBucket|
 Deleting a bucket|amazon-s3-DeleteBucket|
 
-
+NOTE: Review default.build for usage of tasks
 
 Desired improvements:
 The ability to list multiple files (fileset)  to send to an s3 bucket rather than one at a time
