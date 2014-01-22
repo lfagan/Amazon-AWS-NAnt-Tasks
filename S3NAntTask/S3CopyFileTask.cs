@@ -21,8 +21,8 @@ namespace S3NAntTask
         [StringValidator(AllowEmpty = false)]
         public string targetKey { get; set; }
 
-        [TaskAttribute("targetBucket", Required = true)]
-        [StringValidator(AllowEmpty = false)]
+        [TaskAttribute("targetBucket", Required = false)]
+        [StringValidator(AllowEmpty = true)]
         public string TargetBucket { get; set; }
 
         [TaskAttribute("overwrite", Required = false)]
@@ -30,6 +30,17 @@ namespace S3NAntTask
         public bool Overwrite { get; set; }
 
         #endregion
+
+        public string GetTargetBucket
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TargetBucket))
+                    return BucketName;
+                else
+                    return TargetBucket;
+            }
+        }
 
         /// <summary>Execute the NAnt task</summary>
         protected override void ExecuteTask()
@@ -42,20 +53,23 @@ namespace S3NAntTask
                 return;
             }
 
-            if (!BucketExists(TargetBucket))
+            if (!BucketExists(GetTargetBucket))
             {
-                Project.Log(Level.Error, "[ERROR] S3 Bucket '{0}' not found!", TargetBucket);
+                Project.Log(Level.Error, "[ERROR] S3 Bucket '{0}' not found!", GetTargetBucket);
                 return;
             }
 
             try
             {
-                Project.Log(Level.Info, "Copying: " + BucketName + ": " + sourceKey + " to " + TargetBucket + ": " + targetKey);
+                Project.Log(Level.Info, "Copying: \r\n" + 
+                    "From: " + BucketName + ": " + sourceKey + "\r\n" +
+                    "to:   " + GetTargetBucket + ": " + targetKey);
+
                 CopyObjectRequest request = new CopyObjectRequest
                 {
                     SourceBucket = BucketName,
                     SourceKey = sourceKey,
-                    DestinationBucket = TargetBucket,
+                    DestinationBucket = GetTargetBucket,
                     DestinationKey = targetKey
                 };
                 CopyObjectResponse response = Client.CopyObject(request);
