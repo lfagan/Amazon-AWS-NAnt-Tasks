@@ -14,16 +14,16 @@ namespace S3NAntTask
 
         protected override void ExecuteTask() 
         {
-            if (!BucketExists())
+            if (!BucketExists(BucketName))
                 CreateBucket();
             else
-                Project.Log(Level.Error, "Bucket already exists!", BucketName);
+                Project.Log(Level.Error, "Bucket: {0}, already exists!", BucketName);
         }
 
         /// <summary>Create the configured bucket</summary>
         public void CreateBucket()
         {
-            Project.Log(Level.Info, "Creating S3 bucket '{0}'", BucketName);
+            Project.Log(Level.Info, "Creating S3 bucket: {0}", BucketName);
             using (Client)
             {
                 try

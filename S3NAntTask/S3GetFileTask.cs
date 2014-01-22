@@ -39,14 +39,14 @@ namespace S3NAntTask
         protected override void ExecuteTask() 
         {
             // Ensure the configured bucket exists
-            if (!BucketExists())
+            if (!BucketExists(BucketName))
             {
-                Project.Log(Level.Error, "[ERROR] S3 Bucket '{0}' not found!", BucketName);
+                Project.Log(Level.Error, "[ERROR] S3 Bucket: {0}, not found!", BucketName);
                 return;
             }
 
             // Ensure the file exists
-            if (!FileExists())
+            if (!FileExists(FileName))
             {
                 Project.Log(Level.Error, "File not found {0}", FileName);
                 return;
@@ -78,9 +78,9 @@ namespace S3NAntTask
             
             // verify that the file actually downloaded
             if (File.Exists(Outputfile))
-                Project.Log(Level.Info, "Download of '{0}' successful.", Outputfile);
+                Project.Log(Level.Info, "Download successful.", Outputfile);
             else
-                Project.Log(Level.Info, "Download of '{0}' FAILED!", Outputfile);
+                Project.Log(Level.Info, "Download FAILED!", Outputfile);
         }
     }
 }
