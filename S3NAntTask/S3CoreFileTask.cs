@@ -47,6 +47,8 @@ namespace S3NAntTask
         /// <returns>True if the file already exists in the specified bucket</returns>
         public bool FileExists(string fileKey)
         {
+            bool retVal = false;
+
             using (Client)
             {
                 try
@@ -63,7 +65,7 @@ namespace S3NAntTask
                             //Project.Log(Level.Info, "File: " + file.Key);
                             if (file.Key.Equals(fileKey))
                             {
-                                return true;
+                                retVal = true;
                             }
                         }
                     }
@@ -73,7 +75,7 @@ namespace S3NAntTask
                     ShowError(ex);
                 }
             }
-            return false;
+            return retVal;
         }
 
 
