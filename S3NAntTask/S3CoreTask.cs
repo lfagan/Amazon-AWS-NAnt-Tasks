@@ -57,7 +57,7 @@ namespace S3NAntTask
 
         /// <summary>Determine if the specified bucket alredy exists</summary>
         /// <returns>True if the bucket exists</returns>
-        public bool BucketExists()
+        public bool BucketExists(string bucketName)
         {
             using (Client)
             {
@@ -65,7 +65,7 @@ namespace S3NAntTask
                 {
                     using (var response = Client.ListBuckets())
                     {
-                        if (response.Buckets.Any(bucket => bucket.BucketName.Equals(BucketName)))
+                        if (response.Buckets.Any(bucket => bucket.BucketName.Equals(bucketName)))
                         {
                             return true;
                         }
